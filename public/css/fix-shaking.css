@@ -1,0 +1,80 @@
+/* Fix for shaking elements */
+/* Disable all transitions and animations globally */
+* {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+}
+
+/* Fix for cards */
+.card {
+    transition: none !important;
+    transform: none !important;
+}
+
+.card:hover {
+    transform: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+}
+
+.card-dashboard {
+    transition: none !important;
+    transform: none !important;
+}
+
+.card-dashboard:hover {
+    transform: none !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.stats-card {
+    transition: none !important;
+    transform: none !important;
+}
+
+.stats-card:hover {
+    transform: none !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.report-card {
+    transition: none !important;
+    transform: none !important;
+}
+
+.report-card:hover {
+    transform: none !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Fix for navigation elements */
+.nav-link {
+    transition: none !important;
+}
+
+.dropdown-menu {
+    transition: none !important;
+    animation: none !important;
+}
+
+.dropdown-toggle::after {
+    transition: none !important;
+}
+
+/* Fix for Bootstrap animations */
+.fade {
+    transition: none !important;
+}
+
+.collapse {
+    transition: none !important;
+}
+
+.collapsing {
+    transition: none !important;
+}
+
+/* Fix for footer links */
+.footer-links a {
+    transition: none !important;
+}

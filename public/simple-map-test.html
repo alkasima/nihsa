@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Map Test - Nigeria Flood Risk</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .controls {
+            padding: 15px;
+            background: #ecf0f1;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success { background: #27ae60; }
+        .btn-warning { background: #f39c12; }
+        .btn-danger { background: #e74c3c; }
+        
+        #map {
+            height: 600px;
+            width: 100%;
+            border: 3px solid #34495e;
+        }
+        
+        .status {
+            padding: 15px;
+            background: #d5dbdb;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .info-panel {
+            padding: 15px;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ Nigeria Flood Risk Map - Simple Test</h1>
+            <p>Testing map visibility and zoom functionality</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-success" onclick="initMap()">🚀 Initialize Map</button>
+            <button class="btn btn-warning" onclick="tryDifferentTiles()">🔄 Try Different Tiles</button>
+            <button class="btn" onclick="addFloodMarkers()">📍 Add Flood Markers</button>
+            <button class="btn btn-danger" onclick="clearMap()">🗑️ Clear Map</button>
+        </div>
+        
+        <div id="map"></div>
+        
+        <div class="status">
+            <strong>Status:</strong> <span id="status">Ready to initialize map...</span>
+        </div>
+        
+        <div class="info-panel">
+            <h3>🎯 Test Instructions:</h3>
+            <ol>
+                <li><strong>Click "Initialize Map"</strong> - This should show a map with background tiles</li>
+                <li><strong>Use zoom controls</strong> - Plus/minus buttons should appear on the map</li>
+                <li><strong>Try mouse wheel</strong> - Should zoom in/out smoothly</li>
+                <li><strong>If no background</strong> - Click "Try Different Tiles"</li>
+                <li><strong>Add markers</strong> - Click "Add Flood Markers" to see flood risk locations</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let currentTileIndex = 0;
+        
+        // Multiple tile providers to test
+        const tileProviders = [
+            {
+                name: 'OpenStreetMap',
+                url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                attribution: '© OpenStreetMap contributors'
+            },
+            {
+                name: 'CartoDB Positron',
+                url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                attribution: '© OpenStreetMap contributors © CARTO'
+            },
+            {
+                name: 'CartoDB Voyager',
+                url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+                attribution: '© OpenStreetMap contributors © CARTO'
+            },
+            {
+                name: 'ESRI World Street',
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+                attribution: 'Tiles © Esri'
+            },
+            {
+                name: 'OpenTopoMap',
+                url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+                attribution: '© OpenStreetMap contributors, SRTM | © OpenTopoMap'
+            }
+        ];
+        
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+            console.log('Status:', message);
+        }
+        
+        function initMap() {
+            try {
+                updateStatus('Initializing map...');
+                
+                // Clear existing map
+                if (map) {
+                    map.remove();
+                }
+                
+                // Create map with Nigeria center
+                map = L.map('map', {
+                    center: [9.0820, 8.6753], // Nigeria coordinates
+                    zoom: 6,
+                    zoomControl: true,
+                    attributionControl: true
+                });
+                
+                updateStatus('Map created, adding tiles...');
+                
+                // Add default tile layer
+                const provider = tileProviders[0];
+                L.tileLayer(provider.url, {
+                    attribution: provider.attribution,
+                    maxZoom: 18,
+                    minZoom: 2
+                }).addTo(map);
+                
+                // Add a center marker
+                L.marker([9.0820, 8.6753])
+                    .addTo(map)
+                    .bindPopup('<b>Nigeria Center</b><br>Map is working!')
+                    .openPopup();
+                
+                updateStatus(`Map initialized with ${provider.name} tiles. Check if you can see the background!`);
+                
+            } catch (error) {
+                updateStatus('Error: ' + error.message);
+                console.error('Map initialization error:', error);
+            }
+        }
+        
+        function tryDifferentTiles() {
+            if (!map) {
+                updateStatus('Please initialize map first!');
+                return;
+            }
+            
+            try {
+                // Remove existing tile layers
+                map.eachLayer(function(layer) {
+                    if (layer._url) {
+                        map.removeLayer(layer);
+                    }
+                });
+                
+                // Try next provider
+                currentTileIndex = (currentTileIndex + 1) % tileProviders.length;
+                const provider = tileProviders[currentTileIndex];
+                
+                updateStatus(`Trying ${provider.name} tiles...`);
+                
+                L.tileLayer(provider.url, {
+                    attribution: provider.attribution,
+                    maxZoom: 18,
+                    minZoom: 2
+                }).addTo(map);
+                
+                updateStatus(`Switched to ${provider.name}. Can you see the background now?`);
+                
+            } catch (error) {
+                updateStatus('Error switching tiles: ' + error.message);
+            }
+        }
+        
+        function addFloodMarkers() {
+            if (!map) {
+                updateStatus('Please initialize map first!');
+                return;
+            }
+            
+            const floodLocations = [
+                {lat: 9.0765, lng: 7.3986, name: 'FCT Abuja', risk: 'High', type: 'Flash/Urban'},
+                {lat: 6.6018, lng: 3.5106, name: 'Lagos', risk: 'High', type: 'Coastal'},
+                {lat: 4.8156, lng: 7.0498, name: 'Port Harcourt', risk: 'High', type: 'Riverine'},
+                {lat: 12.0022, lng: 8.5920, name: 'Kano', risk: 'Moderate', type: 'Flash/Urban'},
+                {lat: 7.1475, lng: 3.3619, name: 'Abeokuta', risk: 'Low', type: 'Riverine'},
+                {lat: 5.5557, lng: 5.7799, name: 'Warri', risk: 'High', type: 'Coastal'},
+                {lat: 7.7319, lng: 4.5594, name: 'Makurdi', risk: 'High', type: 'Riverine'}
+            ];
+            
+            floodLocations.forEach(function(location) {
+                let color;
+                switch(location.risk) {
+                    case 'High': color = '#e74c3c'; break;
+                    case 'Moderate': color = '#f39c12'; break;
+                    case 'Low': color = '#f1c40f'; break;
+                    default: color = '#3498db';
+                }
+                
+                L.circleMarker([location.lat, location.lng], {
+                    radius: 10,
+                    fillColor: color,
+                    color: '#2c3e50',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map)
+                .bindPopup(`
+                    <b>${location.name}</b><br>
+                    Risk Level: <strong>${location.risk}</strong><br>
+                    Flood Type: ${location.type}
+                `);
+            });
+            
+            updateStatus(`Added ${floodLocations.length} flood risk markers to the map.`);
+        }
+        
+        function clearMap() {
+            if (map) {
+                map.remove();
+                map = null;
+                updateStatus('Map cleared. Click "Initialize Map" to start over.');
+            }
+        }
+        
+        // Auto-initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('Page loaded. Click "Initialize Map" to begin.');
+        });
+    </script>
+</body>
+</html>
