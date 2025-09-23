@@ -16,13 +16,12 @@
             @php
                 $isRtl = in_array($locale, $rtlLanguages);
             @endphp
-            <li @if($isRtl) dir="rtl" @endif>
-                <a class="dropdown-item {{ $currentLocale === $locale ? 'active' : '' }}"
+            <li>
+                <a class="dropdown-item {{ $currentLocale === $locale ? 'active' : '' }} text-start"
                    href="{{ route('language.switch', $locale) }}"
                    hreflang="{{ $locale }}"
-                   lang="{{ $locale }}"
-                   @if($isRtl) dir="rtl" @endif>
-                    <span class="@if($isRtl) me-2 @else ms-2 @endif">{{ $language['native'] }}</span>
+                   lang="{{ $locale }}">
+                    <span class="ms-2">{{ $language['native'] }}</span>
                     <small class="text-muted">({{ $language['name'] }})</small>
                 </a>
             </li>

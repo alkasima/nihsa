@@ -659,11 +659,11 @@
                                 {{ __('messages.nav.about') }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="aboutDropdown" role="menu">
-                                <li role="none"><a class="dropdown-item" href="{{ route('about') }}" role="menuitem">{{ __('messages.nav.about_functions') }}</a></li>
-                                <li role="none"><a class="dropdown-item" href="{{ route('about.management') }}" role="menuitem">{{ __('messages.nav.about_management') }}</a></li>
-                                <li role="none"><a class="dropdown-item" href="{{ route('about.structure') }}" role="menuitem">{{ __('messages.nav.about_structure') }}</a></li>
-                                <li role="none"><a class="dropdown-item" href="{{ route('about.offices') }}" role="menuitem">{{ __('messages.nav.about_offices') }}</a></li>
-                                <li role="none"><a class="dropdown-item" href="{{ route('about.history') }}" role="menuitem">{{ __('messages.nav.about_history') }}</a></li>
+                                <li role="none"><a class="dropdown-item" href="{{ route('about') }}" role="menuitem">{{ __('messages.nav.functions') }}</a></li>
+                                <li role="none"><a class="dropdown-item" href="{{ route('about.management') }}" role="menuitem">{{ __('messages.nav.management') }}</a></li>
+                                <li role="none"><a class="dropdown-item" href="{{ route('about.structure') }}" role="menuitem">{{ __('messages.nav.structure') }}</a></li>
+                                <li role="none"><a class="dropdown-item" href="{{ route('about.offices') }}" role="menuitem">{{ __('messages.nav.offices') }}</a></li>
+                                <li role="none"><a class="dropdown-item" href="{{ route('about.history') }}" role="menuitem">{{ __('messages.nav.history') }}</a></li>
                             </ul>
                         </li>
 
