@@ -28,4 +28,12 @@ class News extends Model
         'published_at' => 'datetime',
         'is_featured' => 'boolean',
     ];
+
+    /**
+     * Get the content attribute.
+     */
+    public function getContentAttribute($value)
+    {
+        return $value;
+    }
 }

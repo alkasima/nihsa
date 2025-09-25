@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Publication;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class PublicationController extends Controller
 {
@@ -16,9 +17,10 @@ class PublicationController extends Controller
         // Fetch paginated publications from database (most recent first)
         $publications = Publication::orderBy('publication_date', 'desc')->paginate(12);
 
-        // Group the current page of publications by type for sidebar display
+        // Group ALL publications by type for proper display (not just current page)
+        $allPublications = Publication::orderBy('publication_date', 'desc')->get();
         $publicationsByType = [];
-        foreach ($publications->items() as $item) {
+        foreach ($allPublications as $item) {
             $publicationsByType[$item->type][] = $item;
         }
 
@@ -27,6 +29,16 @@ class PublicationController extends Controller
 
         // Get all distinct types
         $types = Publication::select('type')->distinct()->orderBy('type')->pluck('type')->toArray();
+
+        // Debug information
+        Log::info('Publications Debug', [
+            'total_publications' => $publications->total(),
+            'current_page_count' => $publications->count(),
+            'all_publications_count' => $allPublications->count(),
+            'publications_by_type' => $publicationsByType,
+            'types' => $types,
+            'years' => $years
+        ]);
 
         return view('publications.index', compact('publications', 'publicationsByType', 'years', 'types'));
     }

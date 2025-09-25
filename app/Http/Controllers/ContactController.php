@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ZonalOffice;
+use App\Models\Contact;
 
 class ContactController extends Controller
 {
@@ -116,8 +117,8 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // In a real implementation, we would save to the database and/or send an email
-        // Mail::to('info@nihsa.gov.ng')->send(new ContactFormSubmission($validated));
+        // Save the contact message to the database
+        Contact::create($validated);
 
         return redirect()->route('contact.index')->with('success', 'Your message has been sent successfully. We will get back to you soon.');
     }

@@ -328,9 +328,9 @@
     <section class="py-5 bg-white">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">{{ __('messages.Latest News & Updates') }}</h2>
+                <h2 class="section-title" data-aos="fade-up">{{ __('Latest News & Updates') }}</h2>
                 <a href="{{ route('news.index') }}" class="btn btn-outline-primary" data-aos="fade-up">
-                    <i class="fas fa-newspaper me-2"></i> {{ __('messages.View All News') }}
+                    <i class="fas fa-newspaper me-2"></i> {{ __('View All News') }}
                 </a>
             </div>
             <div class="row g-4">
@@ -357,8 +357,8 @@
                 <div class="col-12">
                     <div class="text-center py-5">
                         <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">{{ __('messages.No news articles available') }}</h5>
-                        <p class="text-muted">{{ __('messages.Check back later for the latest updates from NIHSA.') }}</p>
+                        <h5 class="text-muted">{{ __('No news articles available') }}</h5>
+                        <p class="text-muted">{{ __('Check back later for the latest updates from NIHSA.') }}</p>
                     </div>
                 </div>
                 @endforelse
@@ -372,22 +372,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right">
                     <div class="dashboard-content">
-                        <h2 class="dashboard-title">{{ __('messages.Flood Forecast Dashboard') }}</h2>
-                        <p class="dashboard-subtitle">{{ __('messages.Access real-time flood forecasting data and risk assessments for all states in Nigeria.') }}</p>
+                        <h2 class="dashboard-title">{{ __('Flood Forecast Dashboard') }}</h2>
+                        <p class="dashboard-subtitle">{{ __('Access real-time flood forecasting data and risk assessments for all states in Nigeria.') }}</p>
 
                         <!-- Dashboard Stats -->
                         <div class="dashboard-stats">
                             <div class="dashboard-stat" data-aos="fade-up" data-aos-delay="100">
                                 <div class="dashboard-stat-value">36</div>
-                                <div class="dashboard-stat-label">{{ __('messages.States Covered') }}</div>
+                                <div class="dashboard-stat-label">{{ __('States Covered') }}</div>
                             </div>
                             <div class="dashboard-stat" data-aos="fade-up" data-aos-delay="200">
                                 <div class="dashboard-stat-value">250+</div>
-                                <div class="dashboard-stat-label">{{ __('messages.Monitoring Stations') }}</div>
+                                <div class="dashboard-stat-label">{{ __('Monitoring Stations') }}</div>
                             </div>
                             <div class="dashboard-stat" data-aos="fade-up" data-aos-delay="300">
                                 <div class="dashboard-stat-value">24/7</div>
-                                <div class="dashboard-stat-label">{{ __('messages.Real-time Updates') }}</div>
+                                <div class="dashboard-stat-label">{{ __('Real-time Updates') }}</div>
                             </div>
                         </div>
 
@@ -398,8 +398,8 @@
                                     <i class="fas fa-map-marked"></i>
                                 </div>
                                 <div class="dashboard-feature-content">
-                                    <h4 class="dashboard-feature-title">{{ __('messages.Interactive Maps') }}</h4>
-                                    <p class="dashboard-feature-description">{{ __('messages.Visualize flood risk areas with color-coded maps showing current and projected flood levels across Nigeria.') }}</p>
+                                    <h4 class="dashboard-feature-title">{{ __('Interactive Maps') }}</h4>
+                                    <p class="dashboard-feature-description">{{ __('Visualize flood risk areas with color-coded maps showing current and projected flood levels across Nigeria.') }}</p>
                                 </div>
                             </div>
 
@@ -408,8 +408,8 @@
                                     <i class="fas fa-bell"></i>
                                 </div>
                                 <div class="dashboard-feature-content">
-                                    <h4 class="dashboard-feature-title">{{ __('messages.Early Warning System') }}</h4>
-                                    <p class="dashboard-feature-description">{{ __('messages.Receive timely alerts and notifications about potential flood risks in your area.') }}</p>
+                                    <h4 class="dashboard-feature-title">{{ __('Early Warning System') }}</h4>
+                                    <p class="dashboard-feature-description">{{ __('Receive timely alerts and notifications about potential flood risks in your area.') }}</p>
                                 </div>
                             </div>
 
@@ -418,15 +418,15 @@
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div class="dashboard-feature-content">
-                                    <h4 class="dashboard-feature-title">{{ __('messages.Data Analytics') }}</h4>
-                                    <p class="dashboard-feature-description">{{ __('messages.Access historical data and trend analysis to better understand flood patterns and improve preparedness.') }}</p>
+                                    <h4 class="dashboard-feature-title">{{ __('Data Analytics') }}</h4>
+                                    <p class="dashboard-feature-description">{{ __('Access historical data and trend analysis to better understand flood patterns and improve preparedness.') }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="dashboard-cta" data-aos="fade-up">
                             <a href="{{ route('flood-forecast-dashboard') }}" class="btn cta-btn cta-btn-primary btn-lg">
-                                <i class="fas fa-chart-line me-2"></i> {{ __('messages.Access Dashboard') }}
+                                <i class="fas fa-chart-line me-2"></i> {{ __('Access Dashboard') }}
                             </a>
                         </div>
                     </div>
@@ -483,8 +483,8 @@
                                         <i class="fas fa-mobile-alt fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5 class="h6 mb-1">{{ __('messages.Mobile Friendly') }}</h5>
-                                        <p class="small mb-0 text-muted">{{ __('messages.Access anywhere') }}</p>
+                                        <h5 class="h6 mb-1">{{ __('Mobile Friendly') }}</h5>
+                                        <p class="small mb-0 text-muted">{{ __('Access anywhere') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -496,8 +496,8 @@
                                         <i class="fas fa-download fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5 class="h6 mb-1">{{ __('messages.Exportable') }}</h5>
-                                        <p class="small mb-0 text-muted">{{ __('messages.Multiple formats') }}</p>
+                                        <h5 class="h6 mb-1">{{ __('Exportable') }}</h5>
+                                        <p class="small mb-0 text-muted">{{ __('Multiple formats') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -509,8 +509,8 @@
                                         <i class="fas fa-sync-alt fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5 class="h6 mb-1">{{ __('messages.Real-time') }}</h5>
-                                        <p class="small mb-0 text-muted">{{ __('messages.Live updates') }}</p>
+                                        <h5 class="h6 mb-1">{{ __('Real-time') }}</h5>
+                                        <p class="small mb-0 text-muted">{{ __('Live updates') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -975,15 +975,15 @@
     <section class="publications-section">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="section-title" data-aos="fade-up">{{ __('messages.Featured Publications') }}</h2>
+                <h2 class="section-title" data-aos="fade-up">{{ __('Featured Publications') }}</h2>
                 <a href="{{ route('publications.index') }}" class="btn btn-outline-primary" data-aos="fade-up">
-                    <i class="fas fa-book me-2"></i> {{ __('messages.View All Publications') }}
+                    <i class="fas fa-book me-2"></i> {{ __('View All Publications') }}
                 </a>
             </div>
 
             <div class="row mb-4">
                 <div class="col-lg-8" data-aos="fade-up">
-                    <p>{{ __('messages.Access our latest research, reports, and guidelines to stay informed about hydrological developments and flood management strategies.') }}</p>
+                    <p>{{ __('Access our latest research, reports, and guidelines to stay informed about hydrological developments and flood management strategies.') }}</p>
                 </div>
             </div>
 
@@ -1018,7 +1018,7 @@
 
                                 <div class="publication-footer">
                                     <a href="{{ route('publications.show', $publication) }}" class="publication-btn">
-                                        <i class="fas fa-download"></i> {{ __('messages.View Details') }}
+                                        <i class="fas fa-download"></i> {{ __('View Details') }}
                                     </a>
                                 </div>
                             </div>
@@ -1028,8 +1028,8 @@
                     <div class="col-12">
                         <div class="text-center py-5">
                             <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">{{ __('messages.No publications available') }}</h5>
-                            <p class="text-muted">{{ __('messages.Check back later for the latest research and reports from NIHSA.') }}</p>
+                            <h5 class="text-muted">{{ __('No publications available') }}</h5>
+                            <p class="text-muted">{{ __('Check back later for the latest research and reports from NIHSA.') }}</p>
                         </div>
                     </div>
                     @endforelse
@@ -1041,11 +1041,11 @@
     <!-- Partners Section -->
     <section class="partners-section">
         <div class="container">
-            <h2 class="section-title text-center mb-5" data-aos="fade-up">{{ __('messages.Our Partners & Collaborators') }}</h2>
+            <h2 class="section-title text-center mb-5" data-aos="fade-up">{{ __('Our Partners & Collaborators') }}</h2>
 
             <div class="row mb-5">
                 <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
-                    <p class="lead">{{ __('messages.We collaborate with various national and international organizations to enhance our hydrological services and flood forecasting capabilities.') }}</p>
+                    <p class="lead">{{ __('We collaborate with various national and international organizations to enhance our hydrological services and flood forecasting capabilities.') }}</p>
                 </div>
             </div>
 
@@ -1061,8 +1061,8 @@
                 <div class="col-12">
                     <div class="text-center py-5">
                         <i class="fas fa-handshake fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">{{ __('messages.No partners available') }}</h5>
-                        <p class="text-muted">{{ __('messages.Our partner organizations will be displayed here.') }}</p>
+                        <h5 class="text-muted">{{ __('No partners available') }}</h5>
+                        <p class="text-muted">{{ __('Our partner organizations will be displayed here.') }}</p>
                     </div>
                 </div>
                 @endforelse

@@ -160,7 +160,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
+                                    <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name ?? 'Guest' }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li>
@@ -219,6 +219,14 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.data-requests*') ? 'active' : '' }}" href="{{ route('admin.data-requests.index') }}">
                                     <i class="fas fa-clipboard-list"></i> Data Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.contacts*') ? 'active' : '' }}" href="{{ route('admin.contacts.index') }}">
+                                    <i class="fas fa-envelope"></i> Contact Messages
+                                    @if($unreadContacts ?? false)
+                                        <span class="badge bg-danger ms-1">{{ $unreadContacts }}</span>
+                                    @endif
                                 </a>
                             </li>
                             <li class="nav-item">

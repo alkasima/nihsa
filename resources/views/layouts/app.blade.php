@@ -651,7 +651,7 @@
                         </li>
 
                         <li class="nav-item" role="none">
-                            <a class="nav-link {{ request()->routeIs('flood-data.index') ? 'active' : '' }}" href="{{ route('flood-data.index') }}" role="menuitem" aria-label="{{ __('messages.nav.flood_data') }}">{{ __('messages.nav.flood_data') }}</a>
+                            <a class="nav-link {{ request()->routeIs('admin.flood-data.index') ? 'active' : '' }}" href="{{ route('admin.flood-data.index') }}" role="menuitem" aria-label="{{ __('messages.nav.flood_data') }}">{{ __('messages.nav.flood_data') }}</a>
                         </li>
 
                         <li class="nav-item dropdown" role="none">

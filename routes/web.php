@@ -17,6 +17,7 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -62,9 +63,9 @@ Route::get('/flood-forecast-dashboard/export', [FloodForecastDashboardController
 Route::get('/map', function () {
     return view('map-test');
 })->name('map');
-Route::get('/flood-data', [FloodDataController::class, 'index'])->name('flood-data.index');
-Route::get('/flood-data/{year}', [FloodDataController::class, 'byYear'])->name('flood-data.by-year');
-Route::get('/flood-data/{year}/{state}', [FloodDataController::class, 'byState'])->name('flood-data.by-state');
+
+// Redirect old flood-data route to admin
+Route::redirect('/flood-data', '/admin/flood-data');
 
 // Zonal Offices
 Route::get('/zonal-offices', [ZonalOfficeController::class, 'index'])->name('zonal-offices.index');
@@ -114,7 +115,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::delete('publications/{publication}', [PublicationController::class, 'destroy'])->name('publications.destroy');
 
     // Admin Flood Data Management
-    Route::resource('flood-data', FloodDataController::class)->except(['show']);
+    Route::get('/flood-data', [FloodDataController::class, 'index'])->name('flood-data.index');
+    Route::get('/flood-data/{year}', [FloodDataController::class, 'byYear'])->name('flood-data.by-year');
+    Route::get('/flood-data/{year}/{state}', [FloodDataController::class, 'byState'])->name('flood-data.by-state');
+    Route::resource('flood-data', FloodDataController::class)->except(['show', 'index']);
 
     // Admin Zonal Offices Management
     Route::resource('zonal-offices', ZonalOfficeController::class)->except(['show']);
@@ -148,4 +152,32 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/reports/downloads', [ReportsController::class, 'downloads'])->name('reports.downloads');
     Route::post('/reports/generate', [ReportsController::class, 'generate'])->name('reports.generate');
     Route::get('/reports/download/{id}', [ReportsController::class, 'download'])->name('reports.download');
+
+    // Admin Contact Messages Management
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
+    Route::post('/contacts/{contact}/mark-read', [AdminContactController::class, 'markAsRead'])->name('contacts.mark-read');
+    Route::post('/contacts/{contact}/mark-unread', [AdminContactController::class, 'markAsUnread'])->name('contacts.mark-unread');
+    Route::post('/contacts/bulk-mark-read', [AdminContactController::class, 'bulkMarkAsRead'])->name('contacts.bulk-mark-read');
+    Route::post('/contacts/bulk-mark-unread', [AdminContactController::class, 'bulkMarkAsUnread'])->name('contacts.bulk-mark-unread');
+    Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
+    Route::post('/contacts/bulk-delete', [AdminContactController::class, 'bulkDestroy'])->name('contacts.bulk-delete');
+});
+
+// Debug route to check publications
+Route::get('/debug-publications', function() {
+    $publications = App\Models\Publication::all();
+    return response()->json([
+        'count' => $publications->count(),
+        'publications' => $publications->map(function($pub) {
+            return [
+                'id' => $pub->id,
+                'title' => $pub->title,
+                'type' => $pub->type,
+                'year' => $pub->year,
+                'is_featured' => $pub->is_featured,
+                'publication_date' => $pub->publication_date
+            ];
+        })
+    ]);
 });
