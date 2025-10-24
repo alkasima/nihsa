@@ -102,7 +102,7 @@
         }
 
         .navbar-brand img {
-            max-height: 40px;
+            max-height: 60px;
             width: auto;
         }
 
@@ -621,7 +621,7 @@
         <nav class="navbar navbar-expand-md main-navbar" role="navigation" aria-label="Main navigation">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" aria-label="NIHSA Home">
-                    <img src="{{ asset('images/nihsa-logo.png') }}" alt="Nigeria Hydrological Services Agency Logo" onerror="this.src='{{ asset('images/nihsa-logo-placeholder.svg') }}'">
+                    <img src="{{ asset('images/logo.png') }}" alt="Nigeria Hydrological Services Agency Logo" onerror="this.src='{{ asset('images/nihsa-logo-placeholder.svg') }}'">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

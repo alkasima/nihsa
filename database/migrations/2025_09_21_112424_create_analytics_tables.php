@@ -52,8 +52,8 @@ return new class extends Migration
             $table->integer('session_duration')->nullable(); // in seconds
             $table->integer('page_count')->default(1);
             $table->boolean('is_new_visitor')->default(true);
-            $table->timestamp('first_visit_at');
-            $table->timestamp('last_activity_at');
+            $table->timestamp('first_visit_at')->useCurrent();
+            $table->timestamp('last_activity_at')->useCurrent();
             $table->timestamps();
 
             $table->index(['first_visit_at']);
