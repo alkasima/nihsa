@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\FloodDataController;
 use App\Http\Controllers\ZonalOfficeController;
 use App\Http\Controllers\PartnerController;
@@ -53,6 +54,11 @@ Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/publications', [PublicationController::class, 'index'])->name('publications.index');
 Route::get('/publications/{publication}', [PublicationController::class, 'show'])->name('publications.show');
 Route::get('/publications/download/{publication}', [PublicationController::class, 'download'])->name('publications.download');
+
+// Procurements Routes
+Route::get('/procurements', [ProcurementController::class, 'index'])->name('procurements.index');
+Route::get('/procurements/{procurement}', [ProcurementController::class, 'show'])->name('procurements.show');
+Route::get('/procurements/download/{procurement}', [ProcurementController::class, 'download'])->name('procurements.download');
 
 // Flood Forecast Dashboard
 Route::get('/flood-forecast-dashboard', [FloodForecastDashboardController::class, 'index'])->name('flood-forecast-dashboard');
@@ -113,6 +119,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('publications/{publication}/edit', [PublicationController::class, 'edit'])->name('publications.edit');
     Route::put('publications/{publication}', [PublicationController::class, 'update'])->name('publications.update');
     Route::delete('publications/{publication}', [PublicationController::class, 'destroy'])->name('publications.destroy');
+
+    // Admin Procurements Management
+    Route::get('procurements', [ProcurementController::class, 'adminIndex'])->name('procurements.index');
+    Route::get('procurements/create', [ProcurementController::class, 'create'])->name('procurements.create');
+    Route::post('procurements', [ProcurementController::class, 'store'])->name('procurements.store');
+    Route::get('procurements/{procurement}/edit', [ProcurementController::class, 'edit'])->name('procurements.edit');
+    Route::put('procurements/{procurement}', [ProcurementController::class, 'update'])->name('procurements.update');
+    Route::delete('procurements/{procurement}', [ProcurementController::class, 'destroy'])->name('procurements.destroy');
 
     // Admin Flood Data Management
     Route::get('/flood-data', [FloodDataController::class, 'index'])->name('flood-data.index');

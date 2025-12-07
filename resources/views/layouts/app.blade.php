@@ -643,6 +643,10 @@
                         </li>
 
                         <li class="nav-item" role="none">
+                            <a class="nav-link {{ request()->routeIs('procurements.index') ? 'active' : '' }}" href="{{ route('procurements.index') }}" role="menuitem" aria-label="Procurements">Procurements</a>
+                        </li>
+
+                        <li class="nav-item" role="none">
                             <a class="nav-link {{ request()->routeIs('data-request.*') ? 'active' : '' }}" href="{{ route('data-request.create') }}" role="menuitem" aria-label="{{ __('messages.nav.data_request') }}">{{ __('messages.nav.data_request') }}</a>
                         </li>
 
@@ -798,6 +802,7 @@
                             <li><a href="{{ route('home') }}">{{ __('messages.nav.home') }}</a></li>
                             <li><a href="{{ route('about') }}">{{ __('messages.nav.about') }}</a></li>
                             <li><a href="{{ route('publications.index') }}">{{ __('messages.nav.publications') }}</a></li>
+                            <li><a href="{{ route('procurements.index') }}">Procurements</a></li>
                             <li><a href="{{ route('news.index') }}">{{ __('messages.nav.news') }}</a></li>
                             <li><a href="{{ route('flood-forecast-dashboard') }}">{{ __('messages.nav.flood_dashboard') }}</a></li>
                             <li><a href="{{ route('contact.index') }}">{{ __('messages.nav.contact') }}</a></li>

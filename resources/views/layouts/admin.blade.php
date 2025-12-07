@@ -212,6 +212,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.procurements*') ? 'active' : '' }}" href="{{ route('admin.procurements.index') }}">
+                                    <i class="fas fa-gavel"></i> Procurements
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.flood-data*') ? 'active' : '' }}" href="{{ route('admin.flood-data.index') }}">
                                     <i class="fas fa-water"></i> Flood Data
                                 </a>
