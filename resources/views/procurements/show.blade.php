@@ -4,7 +4,7 @@
 
 @section('breadcrumbs')
     <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="{{ route('Procurements.index') }}" itemprop="item">
+        <a href="{{ route('procurements.index') }}" itemprop="item">
             <span itemprop="name">Procurements</span>
         </a>
         <meta itemprop="position" content="2" />
@@ -43,7 +43,7 @@
                                 <div class="d-flex flex-wrap gap-3 mb-3">
                                     <span class="badge bg-primary">{{ $procurement->type }}</span>
                                     <span class="badge bg-secondary">{{ $procurement->year }}</span>
-                                    <span class="badge bg-info">Published: {{ $procurement->procurement_date->format('F j, Y') }}</span>
+                                    <span class="badge bg-info">Published: {{ $procurement->publication_date->format('F j, Y') }}</span>
                                     @if($procurement->is_featured)
                                         <span class="badge bg-warning">Featured</span>
                                     @endif
@@ -52,10 +52,10 @@
                             </div>
 
                             <div class="d-grid gap-2">
-                                <a href="{{ route('Procurements.download', $procurement->id) }}" class="btn cta-btn cta-btn-primary">
+                                <a href="{{ route('procurements.download', $procurement->id) }}" class="btn cta-btn cta-btn-primary">
                                     <i class="fas fa-download me-2"></i> Download procurement
                                 </a>
-                                <a href="{{ route('Procurements.index') }}" class="btn btn-outline-secondary">
+                                <a href="{{ route('procurements.index') }}" class="btn btn-outline-secondary">
                                     <i class="fas fa-arrow-left me-2"></i> Back to Procurements
                                 </a>
                             </div>
@@ -97,11 +97,11 @@
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ Str::limit($related->title, 50) }}</h5>
-                                    <p class="card-text small text-muted">{{ $related->procurement_date->format('F j, Y') }}</p>
+                                    <p class="card-text small text-muted">{{ $related->publication_date->format('F j, Y') }}</p>
                                     <p class="card-text">{{ Str::limit($related->description ?? 'No description available', 100) }}</p>
                                 </div>
                                 <div class="card-footer bg-transparent">
-                                    <a href="{{ route('Procurements.show', $related) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                    <a href="{{ route('procurements.show', $related) }}" class="btn btn-sm btn-outline-primary">View Details</a>
                                 </div>
                             </div>
                         </div>

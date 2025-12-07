@@ -786,7 +786,7 @@
                                                 </span>
                                             </div>
                                             <p class="card-text text-muted mb-3">
-                                                <i class="fas fa-clock me-1"></i>{{ $procurement->procurement_date->format('M j, Y') }}
+                                                <i class="fas fa-clock me-1"></i>{{ $procurement->publication_date->format('M j, Y') }}
                                             </p>
                                             <p class="card-text">{{ Str::limit($procurement->description, 100) }}</p>
                                         </div>
@@ -794,10 +794,10 @@
                                         <div class="procurement-meta">
                                             <div class="d-flex justify-content-start align-items-center">
                                                 <div class="d-flex gap-1" style="gap: 0.5rem !important;">
-                                                    <a href="{{ route('Procurements.show', $procurement->id) }}" class="btn btn-view">
+                                                    <a href="{{ route('procurements.show', $procurement->id) }}" class="btn btn-view">
                                                         <i class="fas fa-eye me-1"></i>View
                                                     </a>
-                                                    <a href="{{ route('Procurements.download', $procurement->id) }}" class="btn btn-download">
+                                                    <a href="{{ route('procurements.download', $procurement->id) }}" class="btn btn-download">
                                                         <i class="fas fa-download me-1"></i>Download
                                                     </a>
                                                 </div>
@@ -829,7 +829,7 @@
                                                 <div class="procurement-list-info">
                                                     <h5 class="mb-2">{{ $procurement->title }}</h5>
                                                     <div class="procurement-list-meta">
-                                                        <i class="fas fa-calendar me-2"></i>{{ $procurement->procurement_date->format('F j, Y') }}
+                                                        <i class="fas fa-calendar me-2"></i>{{ $procurement->publication_date->format('F j, Y') }}
                                                         @if($procurement->description)
                                                             <br><small class="text-muted">{{ Str::limit($procurement->description, 120) }}</small>
                                                         @endif
@@ -837,10 +837,10 @@
                                                 </div>
                                                 <div class="procurement-list-actions">
                                                     <span class="procurement-type-badge me-2">{{ $procurement->year }}</span>
-                                                    <a href="{{ route('Procurements.show', $procurement->id) }}" class="btn btn-view">
+                                                    <a href="{{ route('procurements.show', $procurement->id) }}" class="btn btn-view">
                                                         <i class="fas fa-eye me-1"></i>View
                                                     </a>
-                                                    <a href="{{ route('Procurements.download', $procurement->id) }}" class="btn btn-download">
+                                                    <a href="{{ route('procurements.download', $procurement->id) }}" class="btn btn-download">
                                                         <i class="fas fa-download me-1"></i>Download
                                                     </a>
                                                 </div>
