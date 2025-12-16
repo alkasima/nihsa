@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        $users = User::with('roles')->latest()->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -24,7 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::orderBy('name')->get();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -36,15 +38,20 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:admin,editor,viewer'],
+            'roles' => ['required', 'array'],
+            'roles.*' => ['exists:roles,id'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
         ]);
+
+        // Assign roles to the user
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->roles);
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
@@ -64,7 +71,10 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        $user->load('roles');
+        $roles = Role::orderBy('name')->get();
+        $userRoles = $user->roles->pluck('id')->toArray();
+        return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
     }
 
     /**
@@ -75,16 +85,23 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
-            'role' => ['required', 'string', 'in:admin,editor,viewer'],
-            'status' => ['required', 'string', 'in:active,inactive'],
+            'roles' => ['required', 'array'],
+            'roles.*' => ['exists:roles,id'],
+            'status' => ['nullable', 'string', 'in:active,inactive'],
         ]);
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role = $request->role;
-        $user->status = $request->status;
+        if ($request->has('status')) {
+            $user->status = $request->status;
+        }
         $user->save();
+
+        // Sync roles
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->roles);
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }

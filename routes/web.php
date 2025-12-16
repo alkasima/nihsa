@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\RoleController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -105,34 +106,62 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     // Admin News Management
-    Route::get('news', [NewsController::class, 'adminIndex'])->name('news.index');
-    Route::get('news/create', [NewsController::class, 'create'])->name('news.create');
-    Route::post('news', [NewsController::class, 'store'])->name('news.store');
-    Route::get('news/{news}/edit', [NewsController::class, 'edit'])->name('news.edit');
-    Route::put('news/{news}', [NewsController::class, 'update'])->name('news.update');
-    Route::delete('news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::middleware('permission:news.view')->group(function () {
+        Route::get('news', [NewsController::class, 'adminIndex'])->name('news.index');
+    });
+    Route::middleware('permission:news.create')->group(function () {
+        Route::get('news/create', [NewsController::class, 'create'])->name('news.create');
+        Route::post('news', [NewsController::class, 'store'])->name('news.store');
+    });
+    Route::middleware('permission:news.edit')->group(function () {
+        Route::get('news/{news}/edit', [NewsController::class, 'edit'])->name('news.edit');
+        Route::put('news/{news}', [NewsController::class, 'update'])->name('news.update');
+    });
+    Route::middleware('permission:news.delete')->group(function () {
+        Route::delete('news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
+    });
 
     // Admin Publications Management
-    Route::get('publications', [PublicationController::class, 'adminIndex'])->name('publications.index');
-    Route::get('publications/create', [PublicationController::class, 'create'])->name('publications.create');
-    Route::post('publications', [PublicationController::class, 'store'])->name('publications.store');
-    Route::get('publications/{publication}/edit', [PublicationController::class, 'edit'])->name('publications.edit');
-    Route::put('publications/{publication}', [PublicationController::class, 'update'])->name('publications.update');
-    Route::delete('publications/{publication}', [PublicationController::class, 'destroy'])->name('publications.destroy');
+    Route::middleware('permission:publications.view')->group(function () {
+        Route::get('publications', [PublicationController::class, 'adminIndex'])->name('publications.index');
+    });
+    Route::middleware('permission:publications.create')->group(function () {
+        Route::get('publications/create', [PublicationController::class, 'create'])->name('publications.create');
+        Route::post('publications', [PublicationController::class, 'store'])->name('publications.store');
+    });
+    Route::middleware('permission:publications.edit')->group(function () {
+        Route::get('publications/{publication}/edit', [PublicationController::class, 'edit'])->name('publications.edit');
+        Route::put('publications/{publication}', [PublicationController::class, 'update'])->name('publications.update');
+    });
+    Route::middleware('permission:publications.delete')->group(function () {
+        Route::delete('publications/{publication}', [PublicationController::class, 'destroy'])->name('publications.destroy');
+    });
 
     // Admin Procurements Management
-    Route::get('procurements', [ProcurementController::class, 'adminIndex'])->name('procurements.index');
-    Route::get('procurements/create', [ProcurementController::class, 'create'])->name('procurements.create');
-    Route::post('procurements', [ProcurementController::class, 'store'])->name('procurements.store');
-    Route::get('procurements/{procurement}/edit', [ProcurementController::class, 'edit'])->name('procurements.edit');
-    Route::put('procurements/{procurement}', [ProcurementController::class, 'update'])->name('procurements.update');
-    Route::delete('procurements/{procurement}', [ProcurementController::class, 'destroy'])->name('procurements.destroy');
+    Route::middleware('permission:procurement.view')->group(function () {
+        Route::get('procurements', [ProcurementController::class, 'adminIndex'])->name('procurements.index');
+    });
+    Route::middleware('permission:procurement.create')->group(function () {
+        Route::get('procurements/create', [ProcurementController::class, 'create'])->name('procurements.create');
+        Route::post('procurements', [ProcurementController::class, 'store'])->name('procurements.store');
+    });
+    Route::middleware('permission:procurement.edit')->group(function () {
+        Route::get('procurements/{procurement}/edit', [ProcurementController::class, 'edit'])->name('procurements.edit');
+        Route::put('procurements/{procurement}', [ProcurementController::class, 'update'])->name('procurements.update');
+    });
+    Route::middleware('permission:procurement.delete')->group(function () {
+        Route::delete('procurements/{procurement}', [ProcurementController::class, 'destroy'])->name('procurements.destroy');
+    });
 
     // Admin Flood Data Management
-    Route::get('/flood-data', [FloodDataController::class, 'index'])->name('flood-data.index');
-    Route::get('/flood-data/{year}', [FloodDataController::class, 'byYear'])->name('flood-data.by-year');
-    Route::get('/flood-data/{year}/{state}', [FloodDataController::class, 'byState'])->name('flood-data.by-state');
-    Route::resource('flood-data', FloodDataController::class)->except(['show', 'index']);
+    Route::middleware('permission:flood-data.view')->group(function () {
+        Route::get('/flood-data', [FloodDataController::class, 'index'])->name('flood-data.index');
+        Route::get('/flood-data/{year}', [FloodDataController::class, 'byYear'])->name('flood-data.by-year');
+        Route::get('/flood-data/{year}/{state}', [FloodDataController::class, 'byState'])->name('flood-data.by-state');
+    });
+    Route::middleware('permission:flood-data.create|flood-data.edit|flood-data.delete')->group(function () {
+        Route::resource('flood-data', FloodDataController::class)->except(['show', 'index']);
+    });
 
     // Admin Zonal Offices Management
     Route::resource('zonal-offices', ZonalOfficeController::class)->except(['show']);
@@ -141,12 +170,53 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('partners', PartnerController::class)->except(['show']);
 
     // Admin Data Requests Management
-    Route::resource('data-requests', DataRequestController::class)->except(['create', 'store']);
-    Route::post('/data-requests/{dataRequest}/approve', [DataRequestController::class, 'approve'])->name('data-requests.approve');
-    Route::post('/data-requests/{dataRequest}/reject', [DataRequestController::class, 'reject'])->name('data-requests.reject');
+    Route::middleware('permission:data-requests.view')->group(function () {
+        Route::get('data-requests', [DataRequestController::class, 'index'])->name('data-requests.index');
+        Route::get('data-requests/{dataRequest}', [DataRequestController::class, 'show'])->name('data-requests.show');
+    });
+    Route::middleware('permission:data-requests.edit')->group(function () {
+        Route::get('data-requests/{dataRequest}/edit', [DataRequestController::class, 'edit'])->name('data-requests.edit');
+        Route::put('data-requests/{dataRequest}', [DataRequestController::class, 'update'])->name('data-requests.update');
+        Route::post('/data-requests/{dataRequest}/approve', [DataRequestController::class, 'approve'])->name('data-requests.approve');
+        Route::post('/data-requests/{dataRequest}/reject', [DataRequestController::class, 'reject'])->name('data-requests.reject');
+    });
+    Route::middleware('permission:data-requests.delete')->group(function () {
+        Route::delete('data-requests/{dataRequest}', [DataRequestController::class, 'destroy'])->name('data-requests.destroy');
+    });
 
     // Admin User Management
-    Route::resource('users', UserController::class);
+    Route::middleware('permission:users.view')->group(function () {
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+    });
+    Route::middleware('permission:users.create')->group(function () {
+        Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('users', [UserController::class, 'store'])->name('users.store');
+    });
+    Route::middleware('permission:users.edit')->group(function () {
+        Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+    });
+    Route::middleware('permission:users.delete')->group(function () {
+        Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+
+    // Admin Role & Permission Management
+    Route::middleware('permission:roles.view')->group(function () {
+        Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('roles/{role}', [RoleController::class, 'show'])->name('roles.show');
+    });
+    Route::middleware('permission:roles.create')->group(function () {
+        Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+    });
+    Route::middleware('permission:roles.edit')->group(function () {
+        Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    });
+    Route::middleware('permission:roles.delete')->group(function () {
+        Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    });
 
     // Admin Settings Management
     Route::get('/settings/general', [SettingsController::class, 'general'])->name('settings.general');

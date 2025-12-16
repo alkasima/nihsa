@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\TrackPageViews::class,
             \App\Http\Middleware\LocaleMiddleware::class,
         ]);
+        
+        // Register middleware aliases
+        $middleware->alias([
+            'permission' => \App\Http\Middleware\CheckPermission::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

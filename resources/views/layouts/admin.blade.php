@@ -201,31 +201,41 @@
                                     <i class="fas fa-tachometer-alt"></i> Dashboard
                                 </a>
                             </li>
+                            @permission('news.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.news*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">
                                     <i class="fas fa-newspaper"></i> News Management
                                 </a>
                             </li>
+                            @endpermission
+                            @permission('publications.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.publications*') ? 'active' : '' }}" href="{{ route('admin.publications.index') }}">
                                     <i class="fas fa-file-alt"></i> Publications
                                 </a>
                             </li>
+                            @endpermission
+                            @permission('procurement.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.procurements*') ? 'active' : '' }}" href="{{ route('admin.procurements.index') }}">
                                     <i class="fas fa-gavel"></i> Procurements
                                 </a>
                             </li>
+                            @endpermission
+                            @permission('flood-data.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.flood-data*') ? 'active' : '' }}" href="{{ route('admin.flood-data.index') }}">
                                     <i class="fas fa-water"></i> Flood Data
                                 </a>
                             </li>
+                            @endpermission
+                            @permission('data-requests.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.data-requests*') ? 'active' : '' }}" href="{{ route('admin.data-requests.index') }}">
                                     <i class="fas fa-clipboard-list"></i> Data Requests
                                 </a>
                             </li>
+                            @endpermission
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.contacts*') ? 'active' : '' }}" href="{{ route('admin.contacts.index') }}">
                                     <i class="fas fa-envelope"></i> Contact Messages
@@ -244,11 +254,20 @@
                                     <i class="fas fa-handshake"></i> Partners
                                 </a>
                             </li>
+                            @permission('users.view')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
                                     <i class="fas fa-users"></i> User Management
                                 </a>
                             </li>
+                            @endpermission
+                            @permission('roles.view')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                                    <i class="fas fa-user-shield"></i> Roles & Permissions
+                                </a>
+                            </li>
+                            @endpermission
                             {{-- Settings menu hidden as requested --}}
                             {{-- <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.settings*') ? 'active' : '' }}" href="{{ route('admin.settings.general') }}">

@@ -75,13 +75,13 @@
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['email'] }}</td>
                                 <td>
-                                    @if($user['role'] == 'admin')
-                                        <span class="badge bg-danger">Admin</span>
-                                    @elseif($user['role'] == 'editor')
-                                        <span class="badge bg-primary">Editor</span>
-                                    @elseif($user['role'] == 'viewer')
-                                        <span class="badge bg-info">Viewer</span>
-                                    @endif
+                                    @forelse($user->roles as $role)
+                                        <span class="badge {{ $role->is_system ? 'bg-primary' : 'bg-secondary' }}">
+                                            {{ $role->name }}
+                                        </span>
+                                    @empty
+                                        <span class="badge bg-warning">No Role</span>
+                                    @endforelse
                                 </td>
                                 <td>{{ date('M d, Y', strtotime($user['created_at'])) }}</td>
                                 <td>{{ date('M d, Y H:i', strtotime($user['last_login'])) }}</td>

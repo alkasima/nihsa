@@ -66,25 +66,42 @@
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="role" class="form-label">Role <span class="text-danger">*</span></label>
-                                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
-                                        <option value="">Select Role</option>
-                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="editor" {{ old('role') == 'editor' ? 'selected' : '' }}>Editor</option>
-                                        <option value="viewer" {{ old('role') == 'viewer' ? 'selected' : '' }}>Viewer</option>
-                                    </select>
-                                    @error('role')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <label class="form-label">Assign Roles <span class="text-danger">*</span></label>
+                                    <div class="border rounded p-3">
+                                        @forelse($roles as $role)
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input @error('roles') is-invalid @enderror" 
+                                                       type="checkbox" 
+                                                       name="roles[]" 
+                                                       value="{{ $role->id }}"
+                                                       id="role{{ $role->id }}"
+                                                       {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="role{{ $role->id }}">
+                                                    <strong>{{ $role->name }}</strong>
+                                                    @if($role->is_system)
+                                                        <span class="badge bg-primary ms-1">System</span>
+                                                    @endif
+                                                    @if($role->description)
+                                                        <br><small class="text-muted">{{ $role->description }}</small>
+                                                    @endif
+                                                </label>
+                                            </div>
+                                        @empty
+                                            <p class="text-muted mb-0">No roles available. Please create roles first.</p>
+                                        @endforelse
+                                    </div>
+                                    @error('roles')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
+                                    <small class="text-muted">Select one or more roles for this user</small>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label">Role Permissions</label>
+                                    <label class="form-label">Role Permissions Info</label>
                                     <div class="card">
                                         <div class="card-body">
-                                            <p class="mb-2"><strong>Admin:</strong> Full access to all features and settings.</p>
-                                            <p class="mb-2"><strong>Editor:</strong> Can create, edit, and delete content, but cannot manage users or system settings.</p>
-                                            <p class="mb-0"><strong>Viewer:</strong> Read-only access to content, cannot make any changes.</p>
+                                            <p class="mb-2"><i class="fas fa-info-circle text-info me-2"></i><small>Users inherit all permissions from their assigned roles.</small></p>
+                                            <p class="mb-0"><i class="fas fa-shield-alt text-success me-2"></i><small>Multiple roles can be assigned for combined permissions.</small></p>
                                         </div>
                                     </div>
                                 </div>

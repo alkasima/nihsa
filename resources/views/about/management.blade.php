@@ -266,7 +266,7 @@
     </section>
 
     <!-- Governing Board Section -->
-    <section class="py-5">
+    <!-- <section class="py-5">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -341,7 +341,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- CTA Section -->
     <section class="py-5 bg-light">

@@ -143,187 +143,188 @@
                                 Consequently, the Honourable Minister of Water Resources sits at the top of the organizational framework of the Nigeria Hydrological Services Agency as the apex authority from whom all other responsibilities emanate by statute. The Director General oversees the day-to-day running of the Agency and reports to the Honourable Minister. 
                             </p>
                             
-                            <p>There are six (6) Departments in the Agency, five (5) Technical Departments and one (1) Department for General Services. Each of the Departments operates under the leadership of a Director and the Departments are further sub-divided into Divisions and Units for effective discharge of their responsibilities. There are various Units such as Legal, Audit, Procurement, SERVICOM, Press and Anti-corruption that function directly under the office of the Director-General.</p>
+                            <p>There are nine (9) Departments in the Agency, five (7) Technical Departments and one (2) Department for General Services. Each of the Departments operates under the leadership of a Director and the Departments are further sub-divided into Divisions and Units for effective discharge of their responsibilities. There are various Units such as Legal, Audit, Procurement, SERVICOM, Press and Anti-corruption that function directly under the office of the Director-General.</p>
 
-                            <h3 class="mb-4">ORGANOGRAM</h3>
+                            <!-- <h3 class="mb-4">ORGANOGRAM</h3>
                             <p>The Agency has Eight (8) Area Offices with two (2) Field Offices each fashioned, according to the eight (8) Natural Drainage Basins (Hydrological Areas) of the country.  The Agency is structured as shown in the organogram below:</p>
                             <div class="org-chart-container">
                                 <img src="{{ asset('images/org-chart.png') }}" alt="Organizational Chart" class="img-fluid w-100" style="max-height: 600px; object-fit: contain;">
-                            </div>
+                            </div> -->
                             
                             <div class="mt-5">
                                 <h3 class="mb-4">Departments</h3>
                                 
                                 <div class="accordion" id="departmentsAccordion">
-                                    <!-- Department of Hydrogeology -->
+                                    <!-- Department of  Operational Hydrology -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingOne">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Department of Hydrogeology
+                                                Department of Operational Hydrology
                                             </button>
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>The Hydrogeology Department is charged with the responsibility for assessing the status of groundwater resources both quantitatively and qualitatively within the sedimentary and basement areas of the country. The Department carries out borehole data inventory and monitors groundwater flow dynamics to check over-exploitation and for volumetric analysis, and carries out investigations in the inland basins and coastal areas in order to devise management tools to check saline water intrusion. The Department is also responsible for Hydrogeological Mapping and groundwater pollution from salts, mine leachates, Hydrocarbon and other plumes which impact the environment negatively</p>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Femi Stephen Begide</i></strong></p>
+                                                
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Data Collection from hydrometric river gauging stations for real-time data collection. Conducts routine discharge measurements on major rivers and tributaries. This foundational data underpins the agency's Annual Flood Outlook (AFO) and is critical for flood and drought forecasting.</p>
                                                 
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Hydrogeology Department -->
+
+                                    <!-- Engineering Hydrology -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingTwo">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Department of Hydrogeophysics
+                                                Engineering Hydrology
                                             </button>
                                         </h2>
                                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>This Department undertakes project-specific groundwater investigations for the purpose of establishing the trend of critical parameters needed for solving specific groundwater problems; hence the use of remote sensing, geophysics, isotope techniques and transboundary groundwater monitoring and management.</p>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Engr. John Gbadegesin (Acting)</i></strong></p>
                                                 
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Involved in the technical design of hydrological structures, flood control measures, and the development of engineering solutions for water resource management. Maintains hydrometric river gauging stations for real-time data collection. Also conducts routine <strong>discharge measurements</strong> on major rivers and tributaries, and carries out flood Vulnerability assessments.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Operational Hydrology Department -->
+
+                                    <!-- Hydrogeology -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingThree">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Department of Operational Hydrology
+                                                Hydrogeology
                                             </button>
                                         </h2>
                                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>The Department is responsible for assessment of surface water resources through collection of data on river discharge and sediment transport from the hydrological network of stations. In addition, the Department is also charged with the responsibility for forecasting hydrological phenomena, data retrieval, processing and modeling</p>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Franka Fashe-Adam</i></strong></p>
                                                 
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Focuses on groundwater resource assessment and management. Key projects include developing a <strong>National Hydrogeological Map</strong> to overview groundwater availability and quality. Manages a <strong>groundwater monitoring network</strong> to track water level fluctuations, detect saline intrusion, and provide early warnings of pollution.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Planning, Research and Forecasting Department -->
+
+                                    <!-- HydroGeophysics -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingFour">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                Department of Engineering Hydrology 
+                                                HydroGeophysics
                                             </button>
                                         </h2>
                                         <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>This Department is responsible for the design, installation and maintenance of hydrological stations. The Department discharges its responsibilities through the following programmes, among others:</p>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Sunday Huseini (Acting)</i></strong></p>
                                                 
-                                                <ul>
-                                                    <li>Hydrometric network Design and Construction</li>
-                                                    <li>Maintenance of Hydrological station and installations</li>
-                                                    <li>Fabrication and Calibration of hydrological equipment</li>
-                                                    <li>Establishment and instrumentation of telemetric stations</li>
-                                                    <li>Procurement and Assessment of hydrological instruments</li>
-                                                    <li>Flood Vulnerability studies as a Disaster Risk Reduction strategy against man-made hazards such as floods, droughts etc</li>
-                                                    <li>River Engineering (Channel Hydraulic Studies for improvement of Conveyance)</li>
-                                                    <li>Hydro-graphic Surveys</li>
-                                                    <li>Flood Plain Investigation</li>
-                                                    <li>River Discharge Measurement and Rating Curve Generation</li>
-
-                                                </ul>
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Uses geophysical methods to investigate subsurface water resources. Leads specific projects like the <strong>preliminary hydrogeophysical investigation of Nigeria</strong> to identify aquifers, map saline zones, and assess groundwater quality for development.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Finance and Administration Department -->
+
+                                    <!-- Human Resource -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingFive">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                                Department of Hydrogeoinformatics
+                                                Human Resource
                                             </button>
                                         </h2>
                                         <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>This Department is charged with the responsibility for data management and information dissemination to users of Hydrological products. Furthermore, the department is responsible for producing the Annual Flood Outlook (AFO) and addressing all disaster risk reduction issues which negatively impact on the environment as a result of climate variation such as droughts and flood. In addition, the Department harnesses, processes and archives hydrological data and information. It is also responsible for publication of hydrological yearbooks, bulletins and scientific reports. The Department is charged with the responsibility for special studies and investigations in respect of peculiar hydrological catchments and monitoring of the impact of climatic change on water resources and the environment. It also handles inter-agency support services and bilateral relations</p>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Muhammad Amina Hassan</i></strong></p>
                                                 
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>This department is responsible for all personnel management functions within the agency.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Information and Communication Technology Department -->
+
+                                    <!-- Finance and Admin -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingSix">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                                Department of Administration and Finance
+                                                Finance and Admin
                                             </button>
                                         </h2>
                                         <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#departmentsAccordion">
                                             <div class="accordion-body">
-                                                <p>All general services concerning Human Resources, Finance and matters affecting general administration as obtainable in government establishments are undertaken by this department.  
-                                                Table 1: The Eight (8) area offices through which the Agency undertakes its activities (based on the Eight Hydrological Basins)</p>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered table-striped w-100">
-                                                        <thead class="table-primary">
-                                                            <tr>
-                                                                <th class="text-center">HYDROLOGICAL AREA</th>
-                                                                <th class="text-center">AREA OFFICES</th>
-                                                                <th class="text-center">FIELD OFFICES</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Hydrological Area 1<br>Niger – North</strong></td>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Sokoto</strong></td>
-                                                                <td class="text-center">Katsina</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Birnin Kebbi</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Hydrological Area 2<br>Niger – Central</strong></td>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Kaduna</strong></td>
-                                                                <td class="text-center">Ilorin</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Minna</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Hydrological Area 3<br>Upper Benue</strong></td>
-                                                                <td rowspan="2" class="text-center align-middle"><strong>Yola</strong></td>
-                                                                <td class="text-center">Bauchi</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Gombe</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center align-middle"><strong>Hydrological Area 4<br>Lower Benue</strong></td>
-                                                                <td class="text-center align-middle"><strong>Makurdi</strong></td>
-                                                                <td class="text-center">Lafia</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center align-middle"><strong>Hydrological Area 5<br>Niger South</strong></td>
-                                                                <td class="text-center align-middle"><strong>Port-Harcourt</strong></td>
-                                                                <td class="text-center">Asaba<br>Yenegoa</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center align-middle"><strong>Hydrological Area 6<br>West Littoral</strong></td>
-                                                                <td class="text-center align-middle"><strong>Ibadan</strong></td>
-                                                                <td class="text-center">Benin<br>Akure</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center align-middle"><strong>Hydrological Area 7<br>East Littoral</strong></td>
-                                                                <td class="text-center align-middle"><strong>Enugu</strong></td>
-                                                                <td class="text-center">Calabar<br>Owerri</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center align-middle"><strong>Hydrological Area 8<br>Chad Basin</strong></td>
-                                                                <td class="text-center align-middle"><strong>Maiduguri</strong></td>
-                                                                <td class="text-center">Kano<br>Damaturu</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Habibu Halimatu (Acting)</i></strong></p>
                                                 
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Responsible for the agency's financial management, budgeting, and overall administration. The department is led by the <strong>Director of Admin & Finance</strong>.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Planning, Research and Statistics -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingSeven">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                                Planning, Research and Statistics
+                                            </button>
+                                        </h2>
+                                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#departmentsAccordion">
+                                            <div class="accordion-body">
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Awoibi Ukairo (Acting)</i></strong></p>
+                                                
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>Coordinates strategic planning, sectoral research, and statistical analysis. Represents the agency in key partnerships (e.g., with the <strong>World Bank</strong>). Manages the agency's <strong>Database Management System (DBMS)</strong> and leads initiatives like the <strong>Nationwide Sediment Transport Studies Project</strong>.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Coastal and Marine -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingEight">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                                Coastal and Marine
+                                            </button>
+                                        </h2>
+                                        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#departmentsAccordion">
+                                            <div class="accordion-body">
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Engr Aliyu Falal Mohammed (Acting)</i></strong></p>
+                                                
+                                                <p><strong>Core Functions</strong></p>
+                                                <p>A newly created department. Its mandate includes <strong>monitoring and assessing coastal and marine water resources</strong>. It seeks partnerships (e.g., with the <strong>Nigerian Navy and NIMASA</strong>) to expand monitoring networks along the coast, address security and pollution concerns, and safeguard coastal hydrological stations.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- HydroGeoInformatics -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingNine">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                                HydroGeoInformatics
+                                            </button>
+                                        </h2>
+                                        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#departmentsAccordion">
+                                            <div class="accordion-body">
+                                                <p><strong>Director</strong></p>
+                                                <p><strong><i>Engr. Dan Amoudu</i></strong></p>
+                                                
+                                                <p><strong>Core Functions</strong></p>
+                                                <ul>
+                                                    <li><strong>Data Integration & Analysis:</strong> The Data bank of the Agency, Synthesizes surface water, groundwater, and environmental data for sustainable water resource management.</li>
+                                                    <li><strong>Public & Educational Outreach:</strong> Leads initiatives like launching the <strong>NIHSA Hydro Club</strong> in secondary schools to promote water science education and flood awareness.</li>
+                                                    <li><strong>Institutional Collaboration:</strong> Engages in partnerships with academic institutions (e.g., African University of Science and Technology) for research and staff training.</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mt-5">
+                            <!-- <div class="mt-5">
                                 <h3 class="mb-4">Staff Strength</h3>
 
                                 <div class="table-responsive">
@@ -461,7 +462,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <!-- <div class="mt-5">
                                 <h3 class="mb-4">Zonal and Field Offices</h3>

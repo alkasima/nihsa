@@ -823,10 +823,9 @@
                     <div class="col-md-3">
                         <h5>Connect With Us</h5>
                         <div class="social-icons mb-3">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://facebook.com/NIHSA.NG" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/nihsa_ng" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/nihsa_ng" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                         <p>Subscribe to our newsletter for updates</p>
                         <form>
