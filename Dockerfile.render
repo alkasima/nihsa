@@ -10,14 +10,14 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-
 # =========================
-# Stage 2 - Backend (Laravel + PHP 8.3)
+# Stage 2 - Backend + Nginx
 # =========================
-FROM php:8.3-cli
+FROM php:8.3-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    nginx \
     git \
     curl \
     unzip \
@@ -39,10 +39,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# Copy backend application files
+# Copy backend files
 COPY . .
 
-# ✅ Copy built Vite assets (FIXED)
+# Copy built Vite assets
 COPY --from=frontend /app/public/build ./public/build
 
 # Install PHP dependencies
@@ -54,7 +54,7 @@ RUN mkdir -p database \
 
 # Permissions
 RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 storage bootstrap/cache database
+    && chmod -R 775 storage bootstrap/cache database public/build
 
 # Laravel optimizations
 RUN php artisan key:generate || true && \
@@ -62,10 +62,18 @@ RUN php artisan key:generate || true && \
     php artisan route:clear && \
     php artisan view:clear
 
-ENV PORT=8080
+# Remove default nginx config
+RUN rm /etc/nginx/sites-enabled/default
 
-EXPOSE 8080
+# Copy custom nginx config
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
+# Expose Render port
+ENV PORT=10000
+EXPOSE $PORT
 
-CMD sh -c "php artisan migrate --force && [ ! -f database/.seeded ] && php artisan db:seed --force && touch database/.seeded; php -S 0.0.0.0:8080 -t public"
+# Replace listen port in Nginx dynamically (Render sets $PORT)
+RUN sed -i "s/listen 80;/listen $PORT;/" /etc/nginx/conf.d/default.conf
 
+# Start PHP-FPM + Nginx
+CMD sh -c "php artisan migrate --force && [ ! -f database/.seeded ] && php artisan db:seed --force && touch database/.seeded; php-fpm -D && nginx -g 'daemon off;'"
