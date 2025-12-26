@@ -12,18 +12,27 @@ RUN npm run build
 
 
 # =========================
-# Stage 2 - Backend (Laravel + PHP)
+# Stage 2 - Backend (Laravel + PHP 8.3)
 # =========================
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git curl unzip libonig-dev libzip-dev zip sqlite3 \
+    git \
+    curl \
+    unzip \
+    zip \
+    sqlite3 \
+    libsqlite3-dev \
+    libzip-dev \
+    libonig-dev \
     && docker-php-ext-install \
         pdo \
         pdo_sqlite \
         mbstring \
-        zip
+        zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -37,7 +46,7 @@ COPY . .
 COPY --from=frontend /app/public/dist ./public/dist
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Create SQLite database
 RUN mkdir -p database \
