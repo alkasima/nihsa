@@ -39,11 +39,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# Copy application files
+# Copy backend application files
 COPY . .
 
-# Copy built frontend assets
-COPY --from=frontend /app/public/dist ./public/dist
+# ✅ Copy built Vite assets (FIXED)
+COPY --from=frontend /app/public/build ./public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
@@ -52,7 +52,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN mkdir -p database \
     && touch database/database.sqlite
 
-# Set permissions (important for Laravel)
+# Permissions
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 storage bootstrap/cache database
 
