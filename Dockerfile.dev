@@ -1,0 +1,106 @@
+# Development Dockerfile for NIHSA Laravel Application
+# Simplified version for local development without build process
+
+# ===================================
+# Stage 1: Build Frontend Assets (Optional)
+# ===================================
+FROM node:18-alpine AS frontend-builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies
+RUN npm install && npm cache clean --force
+
+# Copy source code and build
+COPY . .
+RUN npm run build || echo "Build failed, but continuing..."
+
+# ===================================
+# Stage 2: PHP Application Setup
+# ===================================
+FROM php:8.3-fpm-alpine
+
+# Install system dependencies
+RUN apk add --no-cache \
+    bash \
+    curl \
+    git \
+    nginx \
+    supervisor \
+    openssh-client \
+    rsync \
+    fcgi \
+    && rm -rf /var/cache/apk/*
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    mbstring \
+    zip \
+    bcmath \
+    opcache \
+    gd \
+    && rm -rf /var/cache/apk/*
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www
+
+# Create non-root user
+RUN addgroup -g 1000 -S appuser && \
+    adduser -u 1000 -S appuser -G appuser
+
+# Copy application files
+COPY --chown=appuser:appuser . .
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+# Copy built assets if available
+RUN if [ -d "/app/public/build" ]; then cp -r /app/public/build/* ./public/build/; else echo "No build assets found"; fi
+
+# Copy development nginx configuration
+COPY docker/nginx/nginx.dev.conf /etc/nginx/http.d/default.conf
+
+# Copy supervisor configuration
+COPY docker/supervisord.conf /etc/supervisord.conf
+
+# Set permissions
+RUN chown -R appuser:appuser /var/www && \
+    chmod -R 755 storage bootstrap/cache public/build 2>/dev/null || true && \
+    mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views && \
+    chown -R appuser:appuser storage
+
+# Laravel optimizations (development)
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache || echo "Cache optimization failed"
+
+# Create log directories
+RUN mkdir -p /var/log/nginx /var/log/supervisor && \
+    chown -R appuser:appuser /var/log
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8080
+
+# Set environment
+ENV APP_ENV=local
+ENV APP_DEBUG=true
+
+# Start services
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

@@ -1,0 +1,141 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: nihsa_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nihsa
+      POSTGRES_USER: nihsa_user
+      POSTGRES_PASSWORD: nihsa_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - nihsa_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nihsa_user -d nihsa"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: nihsa_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis_password
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - nihsa_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Laravel Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    container_name: nihsa_app
+    restart: unless-stopped
+    environment:
+      # Application Environment
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_URL: http://localhost:8080
+      
+      # Database Configuration (PostgreSQL)
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: nihsa
+      DB_USERNAME: nihsa_user
+      DB_PASSWORD: nihsa_password
+      
+      # Redis Configuration
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_password
+      REDIS_DB: 0
+      
+      # Cache Configuration
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      
+      # Mail Configuration
+      MAIL_MAILER: smtp
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_USERNAME: null
+      MAIL_PASSWORD: null
+      MAIL_ENCRYPTION: null
+      MAIL_FROM_ADDRESS: "noreply@nihsa.gov.ng"
+      MAIL_FROM_NAME: "NIHSA"
+      
+      # External Database URL (for your provided connection)
+      DATABASE_URL: "postgresql://default:bn9CDyo5RrgV@ep-delicate-fire-09764825-pooler.us-east-1.aws.neon.tech/nihsa?sslmode=require&channel_binding=require"
+      
+    volumes:
+      - ./storage:/var/www/storage
+      - ./public:/var/www/public
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - nihsa_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # MailHog for email testing (development only)
+  mailhog:
+    image: mailhog/mailhog
+    container_name: nihsa_mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web UI
+    networks:
+      - nihsa_network
+
+  # Nginx reverse proxy (optional, for production-like setup)
+  nginx:
+    image: nginx:alpine
+    container_name: nihsa_nginx
+    restart: unless-stopped
+    volumes:
+      - ./docker/nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf
+      - ./public:/var/www/public
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    networks:
+      - nihsa_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  nihsa_network:
+    driver: bridge

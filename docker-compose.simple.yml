@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: nihsa_postgres_simple
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nihsa
+      POSTGRES_USER: nihsa_user
+      POSTGRES_PASSWORD: nihsa_password
+    volumes:
+      - postgres_data_simple:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - nihsa_network_simple
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nihsa_user -d nihsa"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: nihsa_redis_simple
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis_password
+    volumes:
+      - redis_data_simple:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - nihsa_network_simple
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Laravel Application (PHP Built-in Server)
+  app:
+    image: php:8.3-cli-alpine
+    container_name: nihsa_app_simple
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./storage_simple:/var/www/storage
+    environment:
+      # Application Environment
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_URL: http://localhost:8081
+      
+      # Database Configuration (PostgreSQL)
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: nihsa
+      DB_USERNAME: nihsa_user
+      DB_PASSWORD: nihsa_password
+      
+      # Redis Configuration
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_password
+      REDIS_DB: 0
+      
+      # Cache Configuration
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      
+      # External Database URL (Your provided connection)
+      DATABASE_URL: "postgresql://default:bn9CDyo5RrgV@ep-delicate-fire-09764825-pooler.us-east-1.aws.neon.tech/nihsa?sslmode=require&channel_binding=require"
+      
+    ports:
+      - "8081:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - nihsa_network_simple
+    command: >
+      sh -c "
+        apk add --no-cache bash curl git sqlite linux-headers &&
+        docker-php-ext-install pdo_pgsql &&
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+        composer install --no-dev --optimize-autoloader &&
+        mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views &&
+        php artisan key:generate --force &&
+        php artisan migrate --force &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MailHog for email testing (development only)
+  mailhog:
+    image: mailhog/mailhog
+    container_name: nihsa_mailhog_simple
+    restart: unless-stopped
+    ports:
+      - "1026:1025"  # SMTP server
+      - "8026:8025"  # Web UI
+    networks:
+      - nihsa_network_simple
+
+volumes:
+  postgres_data_simple:
+    driver: local
+  redis_data_simple:
+    driver: local
+
+networks:
+  nihsa_network_simple:
+    driver: bridge

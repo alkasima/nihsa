@@ -1,0 +1,113 @@
+# Multi-stage production Dockerfile for NIHSA Laravel Application
+# Optimized for production deployment with PostgreSQL
+
+# ===================================
+# Stage 1: Build Frontend Assets
+# ===================================
+FROM node:18-alpine AS frontend-builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies for build)
+RUN npm ci && npm cache clean --force
+
+# Copy source code and build
+COPY . .
+RUN npm run build
+
+# ===================================
+# Stage 2: PHP Dependencies & Application Setup
+# ===================================
+FROM php:8.3-fpm-alpine AS php-base
+
+# Install system dependencies
+RUN apk add --no-cache \
+    bash \
+    curl \
+    git \
+    nginx \
+    supervisor \
+    openssh-client \
+    rsync \
+    fcgi \
+    && rm -rf /var/cache/apk/*
+
+# Install PHP extensions
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    mbstring \
+    zip \
+    bcmath \
+    opcache \
+    gd \
+    && rm -rf /var/cache/apk/*
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www
+
+# Create non-root user for security
+RUN addgroup -g 1000 -S appuser && \
+    adduser -u 1000 -S appuser -G appuser
+
+# ===================================
+# Stage 3: Final Application Image
+# ===================================
+FROM php-base AS production
+
+# Copy application files
+COPY --from=frontend-builder /app/public/build ./public/build
+COPY . .
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+# Copy production nginx configuration
+COPY docker/nginx/nginx.production.conf /etc/nginx/http.d/default.conf
+
+# Copy supervisor configuration
+COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
+
+# Copy entrypoint script
+COPY docker/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set permissions
+RUN chown -R appuser:appuser /var/www && \
+    chmod -R 755 storage bootstrap/cache public/build && \
+    mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views && \
+    chown -R appuser:appuser storage
+
+# Laravel optimizations
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
+
+# Create log directories
+RUN mkdir -p /var/log/nginx /var/log/supervisor && \
+    chown -R appuser:appuser /var/log
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost/health || exit 1
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8080
+
+# Set environment
+ENV APP_ENV=production
+ENV APP_DEBUG=false
+
+# Start services
+CMD ["/usr/local/bin/entrypoint.sh"]
