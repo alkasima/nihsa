@@ -34,6 +34,7 @@ Route::get('/lang/{locale}', function ($locale) {
 })->name('language.switch')->middleware(\App\Http\Middleware\LocaleMiddleware::class);
 
 // Redirect /home to admin dashboard
+
 Route::redirect('/home', '/admin/dashboard')
 
 // Search Route
